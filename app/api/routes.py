@@ -49,3 +49,12 @@ def update_car(current_user_token, id):
     db.session.commit()
     response = car_schema.dump(car)
     return jsonify(response)
+
+@api.route('/car/<id>', methods = ['DELETE'])
+@token_required
+def delete_car(current_user_token, id):
+    car = Car.query.get(id)
+    db.session.delete(car)
+    db.session.commit()
+    response = car_schema.dump(car)
+    return jsonify(response)
